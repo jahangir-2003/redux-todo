@@ -42,7 +42,7 @@ const Todos = () => {
   };
 
   return (
-    <div className="flex flex-col items-center w-[500px] mx-auto">
+    <div className="flex flex-col items-center w-[500px] mx-auto pt-20">
       {/* this is table section */}
 
       <table className="table-auto w-[500px] border-2 rounded-md shadow-sm">
