@@ -12,7 +12,7 @@
 }
 
 .loading {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .loader {
   width: 40px;
@@ -23,6 +23,7 @@
   animation: spin 0.5s infinite ease-out;
   will-change: transform;
 }
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

@@ -7,7 +7,7 @@ const Rating = ({ rate, count }: { rate: number; count: number }) => {
   const ratingStar = Array.from({ length: 5 }, (_, index) => {
     let number = index + 0.5;
     return (
-      <span className="text-yellow-400 text-xl">
+      <span key={index} className="text-yellow-400 text-xl">
         {rate >= index + 1 ? (
           <FaStar />
         ) : rate > number ? (
