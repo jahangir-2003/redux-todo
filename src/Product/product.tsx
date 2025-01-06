@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../Redux/Store";
-import { getProduct } from "../Redux/Slices/ProductSlice.tsx";
-import { ProductGrid } from "./ProductGrid.tsx";
+import { addProduct, getProduct } from "../Redux/Slices/ProductSlice.tsx";
+import { ProductGrid } from "./ProductComponent/ProductGrid.tsx";
 import { BiPlus } from "react-icons/bi";
+import AddProduct from "./ProductComponent/AddProduct.tsx";
 
 const Product: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const [open, setOpen] = useState<boolean>(false);
-  const { products, status } = useSelector((state: RootState) => state.product);
-  //   console.log(products);
+  const { products, favorate, status } = useSelector(
+    (state: RootState) => state.product
+  );
+  const [newProduct, setNewProduct] = useState({
+    title: "",
+    price: 0,
+    description: "",
+    image: "",
+    category: "",
+  });
+
+  const handleAddProduct = () => {
+    dispatch(addProduct(newProduct));
+    setOpen(!open);
+  };
+
   useEffect(() => {
     dispatch(getProduct());
   }, [dispatch]);
@@ -21,6 +36,7 @@ const Product: React.FC = () => {
         <span>loading...!</span>
       </div>
     );
+
   if (status === "failed")
     return (
       <div className="loading h-screen w-full flex items-center justify-center flex-row ">
@@ -35,18 +51,21 @@ const Product: React.FC = () => {
         Products
       </h2>
       <div>
-        <ProductGrid productData={products} />
+        <ProductGrid productData={products} favorate={favorate} />
       </div>
-      <button className="fixed bg-red-500 hover:bg-blue-900 duration-500 transition-all hover:shadow-red-800 flex w-14 h-14 right-20 bottom-20 items-center justify-center shadow-xl shadow-cyan-700 rounded-full">
+      <button
+        onClick={() => setOpen(!open)}
+        className="fixed bg-red-500 hover:bg-blue-900 duration-500 transition-all  flex w-14 h-14 right-20 bottom-20 items-center justify-center shadow-xl rounded-full"
+      >
         <BiPlus size={35} color="white" />
       </button>
-      <div
-        className={`${
-          open ? "fixed" : "hidden"
-        } w-full h-full flex todos items-center justify-center top-0`}
-      >
-        sdsuifhsidhf
-      </div>
+      <AddProduct
+        open={open}
+        setOpen={setOpen}
+        newProduct={newProduct}
+        setNewProduct={setNewProduct}
+        handleAdd={handleAddProduct}
+      />
     </div>
   );
 };
