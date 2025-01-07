@@ -19,6 +19,7 @@ const App = () => {
         <div className="flex flex-row gap-2">
           <Link to="/">counter</Link>
           <Link to="todos">todos</Link>
+          <Link to="react-query">query</Link>
           <Link to="product">product</Link>
         </div>
         <div className="flex flex-row gap-5">
