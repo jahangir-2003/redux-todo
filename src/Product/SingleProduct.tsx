@@ -2,22 +2,26 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import {
+  addToCart,
   addToFavorate,
   ProductType,
   removeFromFavorate,
 } from "../Redux/Slices/ProductSlice.tsx";
-import Button from "../Component/Button.tsx";
+import { IoCartOutline } from "react-icons/io5";
+import { AppDispatch, RootState } from "../Redux/Store";
+import { useDispatch, useSelector } from "react-redux";
 import { BiHeart } from "react-icons/bi";
 import { FaHeart } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../Redux/Store.tsx";
 
 const SingleProduct = () => {
   const { id } = useParams();
+  const dispatch: AppDispatch = useDispatch();
   const [product, setProduct] = useState<ProductType | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const { favorate } = useSelector((state: RootState) => state.product);
+  console.log(favorate);
+  const isFavorate = favorate.some((item) => item.id === product?.id);
+  // console.log(isFavorate);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,6 +37,15 @@ const SingleProduct = () => {
     };
     fetchData();
   }, [id]);
+
+  const handleFavorate = ({ isFavorate, product }) => {
+    console.log(isFavorate, product);
+    if (isFavorate) {
+      dispatch(removeFromFavorate(product));
+    } else {
+      dispatch(addToFavorate(product));
+    }
+  };
 
   if (loading) {
     return (
@@ -72,11 +85,27 @@ const SingleProduct = () => {
         </h2>
         <div className="flex flex-row gap-5">
           <button
-            onClick={() => {}}
+            onClick={() => dispatch(addToCart({ ...product, quantity: 1 }))}
             className="w-[41px] h-[41px] flex items-center justify-center bg-purple-500 hover:bg-purple-800 rounded-md "
           >
-            <IoCartOutline size={25} />
+            {<IoCartOutline size={25} color="white" />}
           </button>
+
+          {isFavorate ? (
+            <button
+              onClick={() => handleFavorate({ isFavorate, product })}
+              className="w-[41px] h-[41px] flex items-center justify-center bg-purple-500 hover:bg-purple-800 rounded-md "
+            >
+              {<FaHeart size={25} color="red" />}
+            </button>
+          ) : (
+            <button
+              onClick={() => handleFavorate({ isFavorate, product })}
+              className="w-[41px] h-[41px] flex items-center justify-center bg-purple-500 hover:bg-purple-800 rounded-md "
+            >
+              {<BiHeart size={25} color="white" />}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -57,7 +57,7 @@ const Product: React.FC = () => {
         onClick={() => setOpen(!open)}
         className="fixed bg-red-500 hover:bg-blue-900 duration-500 transition-all  flex w-14 h-14 right-20 bottom-20 items-center justify-center shadow-xl rounded-full"
       >
-        <BiPlus size={35} color="white" />
+        {<BiPlus size={35} color="white" />}
       </button>
       <AddProduct
         open={open}

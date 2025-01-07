@@ -43,14 +43,14 @@ const ProductCart = ({
             onClick={() => handleFavorate({ isFavorate, item })}
             className="rounded-full flex h-[41px] w-[41px] text-red-600 items-center justify-center bg-red-200 hover:bg-red-300 transition-colors"
           >
-            <FaHeart size={25} />
+            {<FaHeart size={25} />}
           </button>
         ) : (
           <button
             onClick={() => handleFavorate({ isFavorate, item })}
-            className="rounded-full flex h-[41px] w-[41px] bg-slate-400 text-black items-center justify-center hover:bg-red-300 transition-colors"
+            className="rounded-full flex h-[41px] w-[41px] bg-slate-400 text-slate-600 items-center justify-center hover:bg-red-300 transition-colors"
           >
-            <BiHeart size={25} />
+            {<BiHeart size={25} />}
           </button>
         )}
 
